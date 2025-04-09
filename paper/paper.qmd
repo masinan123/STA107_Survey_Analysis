@@ -1,5 +1,82 @@
 ---
-title: "paper"
-format: html
+title: "STA107 Post-Course Survey Analysis: Evaluating Student Reflections on R and Statistical Learning"
+author: 
+  - Sinan Ma
+  - Jaiditya Dev
+thanks: "Thanks to the STA107 students for participating in this anonymous post-course survey and for sharing their feedback."
+date: today
+date-format: long
+abstract: "This report analyzes feedback collected from a post-course survey in STA107 (Introduction to Statistics), focusing on students’ experiences with R, the integration of normal models, and their general reflections on the course structure. Using both quantitative and qualitative methods, we identify key trends and themes in students’ learning experiences to inform future curriculum design and pedagogical improvements."
+format: pdf
+toc: true
+number-sections: true
+bibliography: references.bib
+pdf-engine: xelatex
 ---
 
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+#### workspace setup ####
+library(tidyverse)
+library(readr)
+library(janitor)
+library(ggplot2)
+```
+
+```{r}
+#| include: false
+
+#### import survey data ####
+survey_data <- read_csv(here("data/00-raw_data.csv")) 
+# change to clean data later
+```
+
+# Introduction
+
+This report presents an analysis of the anonymous post-course survey completed by students enrolled in **STA107: Introduction to Statistics** at the University of Toronto Mississauga. The survey was voluntary, open for multiple submissions, and contributed **2% to the course grade**. Its goal was to evaluate students’ experiences with R-based activities, the integration of normal distribution concepts, and overall satisfaction with the course components. This feedback will help refine future course offerings and improve the learning experience.
+
+# Survey Questions
+
+This section outlines the structure of the survey and highlights key question types:
+
+- **Quantitative items**: Likert-scale responses on course clarity, usefulness of R exercises, and understanding of statistical concepts.
+- **Qualitative items**: Open-ended prompts for students to share what they found most/least helpful and suggestions for improvement.
+
+# Data Analysis
+
+## Methodology
+
+We employed a **mixed-methods approach**:
+
+- **Quantitative analysis**: Descriptive statistics and visualizations for Likert-scale questions.
+- **Qualitative analysis**: Thematic coding of open-ended responses to identify common sentiments and suggestions.
+
+# Results
+
+## Quantitative Results
+
+- Distribution of responses to Likert-scale questions
+- Summary statistics (mean, median, SD)
+- Visualizations: bar plots, histograms
+
+## Qualitative Results
+
+- Key themes identified
+- Word frequency or sentiment analysis (optional)
+
+# Discussion
+
+- **Interpretation** of major findings: strengths and gaps in course delivery
+- **Limitations**: sampling bias, multiple submissions allowed, missing data
+- **Future directions**: refining R activities, scaffolding normal model lessons, improving student support
+
+# Conclusion
+
+The STA107 post-course survey provides valuable insights into how students perceive the course structure and its technical components. Findings highlight both effective practices and opportunities for enhancement. Continued evaluation and iteration will ensure the course remains responsive to student needs and pedagogical best practices.
+
+# References
+
+Citations goes here.
