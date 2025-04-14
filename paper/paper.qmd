@@ -1,17 +1,19 @@
 ---
-title: "STA107 Post-Course Survey Analysis: Evaluating Student Reflections on R and Statistical Learning"
+title: "STA107 Post-Course Survey Analysis"
+subtitle: "Evaluating Student Reflections on R and Statistical Learning"
 author: 
   - Sinan Ma
   - Jaiditya Dev
-thanks: "Thanks to the STA107 students for participating in this anonymous post-course survey and for sharing their feedback."
-date: today
-date-format: long
-abstract: "This report analyzes feedback collected from a post-course survey in STA107 (Introduction to Statistics), focusing on students’ experiences with R, the integration of normal models, and their general reflections on the course structure. Using both quantitative and qualitative methods, we identify key trends and themes in students’ learning experiences to inform future curriculum design and pedagogical improvements."
-format: pdf
-toc: true
-number-sections: true
-bibliography: references.bib
-pdf-engine: xelatex
+date: "April 13, 2025"
+format: 
+  pdf:
+    toc: true
+    number-sections: true
+    code-fold: true
+    code-summary: "Show Code"
+    fig-align: center
+    fig-cap-location: top
+    keep-tex: true
 ---
 
 ```{r}
@@ -23,14 +25,15 @@ pdf-engine: xelatex
 library(tidyverse)
 library(readr)
 library(janitor)
+library(here)
 library(ggplot2)
 ```
 
-```{r}
-#| include: false
+```{r setup, include=FALSE}
 
 #### import survey data ####
-survey_data <- read_csv(here("data/00-raw_data.csv")) 
+data <- read_csv("../data/clean_data.csv")
+qualitative_data <- read_csv("../data/qualitative_analysis_data.csv")
 # change to clean data later
 ```
 
@@ -45,6 +48,8 @@ This section outlines the structure of the survey and highlights key question ty
 - **Quantitative items**: Likert-scale responses on course clarity, usefulness of R exercises, and understanding of statistical concepts.
 - **Qualitative items**: Open-ended prompts for students to share what they found most/least helpful and suggestions for improvement.
 
+The post-course survey comprised 17 open- and close-ended questions. Among these, 11 were qualitative in nature (`Q3`, `Q6`, `Q8`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`), focusing on free-text responses reflecting students' thoughts on the content, instruction, and overall experience.
+
 # Data Analysis
 
 ## Methodology
@@ -53,6 +58,63 @@ We employed a **mixed-methods approach**:
 
 - **Quantitative analysis**: Descriptive statistics and visualizations for Likert-scale questions.
 - **Qualitative analysis**: Thematic coding of open-ended responses to identify common sentiments and suggestions.
+
+### Qualitative Analysis
+```{r}
+# Load required libraries
+library(tidyverse)
+library(stringr)
+library(tidytext)
+library(syuzhet)
+library(ggplot2)
+library(tidyr)
+library(wordcloud)
+
+# Read in the survey data
+data <- qualitative_data
+
+# Rename columns
+colnames(data)[1:11] <- c("Q3", "Q6", "Q8", "Q10", "Q11", 
+                          "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
+
+# Clean the text
+data_clean <- data %>%
+  mutate(across(everything(), ~ str_trim(tolower(as.character(.)))))
+
+# Initialize an empty data frame to collect sentiment results
+sentiment_results <- data.frame(
+  Question = character(),
+  Positive = numeric(),
+  Negative = numeric(),
+  Neutral = numeric(),
+  stringsAsFactors = FALSE
+)
+
+# Function to calculate sentiment
+analyze_sentiment <- function(question_col, question_name) {
+  sentiments <- get_nrc_sentiment(data_clean[[question_col]])
+  
+  pos <- sum(sentiments$positive)
+  neg <- sum(sentiments$negative)
+  neutral <- nrow(sentiments) - 
+    sum(rowSums(sentiments[, c("positive", "negative")]) > 0)
+  
+  sentiment_results <<- rbind(sentiment_results, data.frame(
+    Question = question_name,
+    Positive = pos,
+    Negative = neg,
+    Neutral = neutral
+  ))
+}
+
+# Apply the function to all relevant questions
+question_names <- c("Q3", "Q6", "Q8", "Q10", "Q11", 
+                    "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
+
+for (qn in question_names) {
+  analyze_sentiment(qn, qn)
+}
+```
 
 # Results
 
@@ -64,19 +126,46 @@ We employed a **mixed-methods approach**:
 
 ## Qualitative Results
 
-- Key themes identified
-- Word frequency or sentiment analysis (optional)
+The sentiment analysis revealed a clear trend of positive student engagement across most open-ended responses. When asked about what aspects of the course were most helpful, students consistently expressed appreciation for the structured content delivery, use of R, and clarity in statistical explanations. Similarly, reflections on the usefulness of the normal model and applied examples elicited strong positive sentiment, highlighting the effectiveness of concept integration throughout the term.
 
-# Discussion
+Feedback on the clarity of teaching and accessibility of course material was more mixed. While many students praised the instructor’s effort and teaching style, others noted inconsistencies in understanding due to the pace of delivery or difficulty following complex R assignments.
 
-- **Interpretation** of major findings: strengths and gaps in course delivery
-- **Limitations**: sampling bias, multiple submissions allowed, missing data
-- **Future directions**: refining R activities, scaffolding normal model lessons, improving student support
+The most critical responses were seen in prompts asking what aspects of the course were least helpful and what improvements could be made. Here, students frequently cited the fast pace of certain topics, confusion around R syntax, and a need for more real-world or scaffolded examples. Words like “confusing,” “fast,” and “examples” frequently appeared in these responses, pointing to the need for clearer instructional supports.
+
+```{r sentiment-plot, echo=FALSE, fig.cap="Sentiment Distribution by Survey Question"}
+# Reshape the data to long format for plotting
+sentiment_long <- sentiment_results %>%
+  pivot_longer(cols = c("Positive", "Negative", "Neutral"), 
+               names_to = "Sentiment", 
+               values_to = "Count")
+
+# Set correct order for x-axis
+sentiment_long$Question <- factor(sentiment_long$Question,
+                                  levels = question_names)
+
+# Plot
+ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("Positive" = "darkgreen", 
+                               "Negative" = "red", "Neutral" = "gray")) +
+  theme_minimal() +
+  labs(title = "Sentiment Distribution by Survey Question",
+       x = "Survey Question",
+       y = "Sentiment Count")
+```
 
 # Conclusion
 
 The STA107 post-course survey provides valuable insights into how students perceive the course structure and its technical components. Findings highlight both effective practices and opportunities for enhancement. Continued evaluation and iteration will ensure the course remains responsive to student needs and pedagogical best practices.
 
+From a qualitative perspective, student feedback revealed strong appreciation for several key elements of the course—especially the hands-on R activities, the integration of real-world statistical examples, and the clarity of normal model explanations. These components were described as engaging and instructive, affirming their value in helping students apply theoretical knowledge in practical settings.
+
+However, when students were asked about areas of improvement, many raised concerns regarding the speed at which complex topics were introduced, as well as the difficulty of interpreting R-based assignments without more structured guidance. Themes of pacing, clarity, and the need for more scaffolded instruction were particularly prominent. Addressing these concerns by slowing down the delivery of technical material, providing more detailed examples, and incorporating mid-semester feedback opportunities could significantly enhance the learning experience in future offerings of STA107.
+
 # References
 
-Citations goes here.
+- Jockers, M. (2017). *syuzhet: Extracts Sentiment and Sentiment-Derived Plot Arcs from Text* (R package v1.0.4). [CRAN Documentation](https://cran.r-project.org/web/packages/syuzhet/index.html)
+
+- Jockers, M. (2020). *Introduction to the Syuzhet Package*. [CRAN Vignette](https://cran.r-project.org/web/packages/syuzhet/vignettes/syuzhet-vignette.html)
+
+- Kim, H. (2022). Sentiment Analysis: Limits and Progress of the Syuzhet Package and Its Lexicons. *Digital Humanities Quarterly, 16*(2). [Article](http://www.digitalhumanities.org/dhq/vol/16/2/000601/000601.html)
