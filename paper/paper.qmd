@@ -41,27 +41,21 @@ qualitative_data <- read_csv("../data/qualitative_analysis_data.csv")
 quantitative_data <- read_csv("../data/quantitative_analysis_data.csv")
 ```
 
+\newpage 
+
 # Introduction
 
 This report presents an analysis of the anonymous post-course survey completed by students enrolled in **STA107: Introduction to Statistics** at the University of Toronto Mississauga. The survey was voluntary, open for multiple submissions, and contributed **2% to the course grade**. Its goal was to evaluate students’ experiences with R-based activities, the integration of normal distribution concepts, and overall satisfaction with the course components. This feedback will help refine future course offerings and improve the learning experience.
 
 # Survey Questions
 
-This section outlines the structure of the survey and highlights key question types:
+We employed a **mixed-methods approach** that integrated both descriptive and inferential techniques for a more complete understanding of student feedback:
 
-- **Quantitative items**: Likert-scale responses on course clarity, usefulness of R exercises, and understanding of statistical concepts.
-- **Qualitative items**: Open-ended prompts for students to share what they found most/least helpful and suggestions for improvement.
+- **Quantitative analysis**: Descriptive statistics and histograms were used to examine patterns in students’ self-rated abilities before and after the course. In addition, **paired t-tests** were conducted to assess whether observed differences in ratings were statistically significant. This inferential step enhances the validity of the findings by quantifying the likelihood that the improvements were not due to chance.
 
-The post-course survey comprised 17 open- and close-ended questions. Among these, 8 were qualitative in nature (`Q3`, `Q6`, `Q8`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`), focusing on free-text responses reflecting students' thoughts on the content, instruction, and overall experience.
+- **Qualitative analysis**: Thematic coding was applied to open-ended responses to uncover recurring ideas and insights. We identified themes corresponding to key areas such as communication skills, R proficiency, conceptual understanding, collaboration, tutorial/TA support, and instructional tools. Strong supporting quotes were selected to illustrate these themes. Notably, many students praised the **Bookdown cherry tree assignment**, **video-based resources**, and TA assistance. A few comments referenced the **pace** of lectures or tutorials, but these were minimal and treated as a sub-theme.
 
-# Data Analysis
-
-## Methodology
-
-We employed a **mixed-methods approach**:
-
-- **Quantitative analysis**: Descriptive statistics and visualizations for Likert-scale questions.
-- **Qualitative analysis**: Thematic coding of open-ended responses to identify common sentiments and suggestions.
+This analysis is not a course evaluation. Rather, it reflects students’ perceptions of how the course contributed to their statistical learning and skill development across multiple dimensions.
 
 ## Quantitative Analysis
 ```{r}
@@ -85,6 +79,9 @@ colnames(quantitative_data) <- c(
 
 ### Communication Ability Before vs. After
 ```{r}
+#| label: fig-comm-hist
+#| fig-cap: "Histogram comparing self-rated statistical communication skills before and after the course."
+
 comm_data <- quantitative_data %>%
   select(Stat_Communication_Before_Course, Stat_Communication_After_Course) %>%
   pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
@@ -98,11 +95,40 @@ ggplot(comm_data, aes(x = factor(Rating), fill = Question)) +
   scale_fill_manual(values = c("Stat_Communication_Before_Course" = "#66c2a5", "Stat_Communication_After_Course" = "#fc8d62"))
 ```
 
-The histogram shows a clear improvement in students' perceived communication ability. More students rated themselves at level 4 or 5 after the course compared to before, indicating that the course helped them gain confidence in articulating statistical ideas.
+As shown in @fig-comm-hist, the histogram shows a clear improvement in students' perceived communication ability. More students rated themselves at level 4 or 5 after the course compared to before, indicating that the course helped them gain confidence in articulating statistical ideas. This shift in self-perception suggests that instruction and practice during the course likely contributed to students' ability to communicate statistical findings more effectively and with greater clarity.
+
+#### Paired t-test: Communication Skills
+
+```{r}
+#| label: tbl-comm-ttest
+
+paired_t_comm <- t.test(
+  quantitative_data$Stat_Communication_Before_Course,
+  quantitative_data$Stat_Communication_After_Course,
+  paired = TRUE
+)
+
+comm_t_table <- data.frame(
+  Mean_Before = round(mean(quantitative_data$Stat_Communication_Before_Course, 
+                           na.rm = TRUE), 2),
+  Mean_After = round(mean(quantitative_data$Stat_Communication_After_Course, 
+                          na.rm = TRUE), 2),
+  t_Statistic = round(paired_t_comm$statistic, 2),
+  p_Value = format.pval(paired_t_comm$p.value, digits = 3)
+)
+
+knitr::kable(comm_t_table, caption = "Paired t-test: Statistical Communication 
+             Skills (Before vs. After)")
+```
+
+The paired t-test in @tbl-comm-ttest shows a **statistically significant** improvement in students’ ability to communicate statistical ideas (*p* < 0.001).
 
 
 ### R Ability Before vs. After
 ```{r}
+#| label: fig-r-hist
+#| fig-cap: "Histogram comparing conceptual understanding from assignments versus tutorials."
+
 r_data <- quantitative_data %>%
   select(R_Skills_Before_Course, R_Skills_After_Course) %>%
   pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
@@ -113,14 +139,43 @@ ggplot(r_data, aes(x = factor(Rating), fill = Question)) +
   theme_minimal() +
   labs(title = "Ability to Use R: Before vs. After",
        x = "Rating (1 = Lowest, 5 = Highest)", y = "Count") +
-  scale_fill_manual(values = c("R_Skills_Before_Course" = "#8da0cb", "R_Skills_After_Course" = "#e78ac3"))
+  scale_fill_manual(values = c("R_Skills_Before_Course" = "#8da0cb", 
+                               "R_Skills_After_Course" = "#e78ac3"))
 ```
 
-Students entered the course with relatively low self-reported R skills (mostly 1s and 2s), but after completing the course, a majority rated themselves at 3 or higher. This shift demonstrates the course’s success in introducing R programming effectively.
+The histogram in @fig-r-hist illustrates a noticeable increase in students' confidence using R after completing the course. Prior to the course, ratings clustered at the lower end (mostly 1s and 2s), suggesting limited familiarity with the software. After the course, a majority of responses shifted toward ratings of 3 or higher. This pattern implies that students gained practical experience and conceptual understanding of R through assignments, tutorials, and the hands-on structure of the course.
+
+
+#### Paired t-test: R Skills
+
+```{r}
+#| label: tbl-r-ttest
+
+paired_t_r <- t.test(
+  quantitative_data$R_Skills_Before_Course,
+  quantitative_data$R_Skills_After_Course,
+  paired = TRUE
+)
+
+r_t_table <- data.frame(
+  Mean_Before = round(mean(quantitative_data$R_Skills_Before_Course, na.rm = TRUE), 2),
+  Mean_After = round(mean(quantitative_data$R_Skills_After_Course, na.rm = TRUE), 2),
+  t_Statistic = round(paired_t_r$statistic, 2),
+  p_Value = format.pval(paired_t_r$p.value, digits = 3)
+)
+
+knitr::kable(r_t_table, caption = "Paired t-test: R Skills (Before vs. After)")
+```
+
+The paired t-test in @tbl-r-ttest shows a **statistically significant** improvement in students’ R programming skills (*p* < 0.001), demonstrating the course’s effectiveness in developing students' computational skills.
+
 
 
 ### Understanding After Assignments vs. Tutorials
 ```{r}
+#| label: fig-concept-hist
+#| fig-cap: "Histogram comparing conceptual understanding from assignments versus tutorials."
+
 concept_data <- quantitative_data %>%
   select(Understanding_After_Assignments, Understanding_After_Tutorials) %>%
   pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
@@ -131,10 +186,34 @@ ggplot(concept_data, aes(x = factor(Rating), fill = Question)) +
   theme_minimal() +
   labs(title = "Understanding of Statistical Concepts: Assignment vs. Tutorial",
        x = "Rating (1 = Lowest, 5 = Highest)", y = "Count") +
-  scale_fill_manual(values = c("Understanding_After_Assignments" = "#a6d854", "Understanding_After_Tutorials" = "#ffd92f"))
+  scale_fill_manual(values = c("Understanding_After_Assignments" = "#a6d854", 
+                               "Understanding_After_Tutorials" = "#ffd92f"))
 ```
 
-Students found both tutorials and assignments useful for understanding statistical concepts, with a slight preference for tutorials. The higher number of level 4 and 5 responses for tutorials suggests that real-time, interactive support may have been especially beneficial.
+As shown in @fig-concept-hist, the histogram compares students’ self-rated understanding of statistical concepts based on two instructional components: assignments and tutorials. While both components received high ratings, tutorials showed a slight edge, especially at levels 4 and 5. This suggests that live, structured interaction (such as walkthroughs and direct Q&A) played a stronger role in reinforcing concepts compared to independent assignments alone.
+
+#### Paired t-test: Conceptual Understanding
+
+```{r}
+#| label: tbl-concept-ttest
+
+paired_t_concept <- t.test(
+  quantitative_data$Understanding_After_Assignments,
+  quantitative_data$Understanding_After_Tutorials,
+  paired = TRUE
+)
+
+concept_t_table <- data.frame(
+  Mean_Assignment = round(mean(quantitative_data$Understanding_After_Assignments, na.rm = TRUE), 2),
+  Mean_Tutorial = round(mean(quantitative_data$Understanding_After_Tutorials, na.rm = TRUE), 2),
+  t_Statistic = round(paired_t_concept$statistic, 2),
+  p_Value = format.pval(paired_t_concept$p.value, digits = 3)
+)
+
+knitr::kable(concept_t_table, caption = "Paired t-test: Understanding (Assignment vs. Tutorial)")
+```
+
+The t-test in @tbl-concept-ttest indicates a **statistically significant** difference favoring tutorials (*p* < 0.05), highlighting the value of interactive learning in supporting student comprehension.
 
 
 ## Qualitative Analysis
