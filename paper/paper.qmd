@@ -31,6 +31,7 @@ library(readr)
 library(janitor)
 library(here)
 library(ggplot2)
+library(knitr)
 ```
 
 ```{r setup, include=FALSE}
@@ -269,12 +270,29 @@ question_names <- c("Q3", "Q6", "Q8", "Q10", "Q13", "Q15", "Q16", "Q17")
 for (qn in question_names) {
   analyze_sentiment(qn, qn)
 }
+
+# Create question-theme mapping
+question_theme_mapping <- tibble(
+  Question = question_names,
+  Theme = c(
+    "Communication Development, Conceptual Understanding",
+    "Understanding via Tutorials & Assignments",
+    "Learning R & Technical Skills",
+    "Real-World Application",
+    "Team Collaboration",
+    "TA & Tutorial Support",
+    "Clarity of Assignments",
+    "Feedback & Reflection"
+  )
+)
 ```
 # Results
 
 ## Quantitative Results
 
 The survey included six Likert-scale questions aimed at capturing students’ self-perceived development in statistical understanding and communication, both before and after the course. The questions also addressed students’ ability to use R software and their comprehension of statistical concepts through tutorials and weekly assignments.
+
+### Summary Table of Themes per Question
 
 Key findings include:
 
@@ -287,6 +305,43 @@ The graphs above illustrate the distribution of responses across the three theme
 ## Qualitative Results
 
 To gain deeper insights into student opinions, the qualitative analysis comprised two parts: thematic analysis and sentiment analysis.
+
+### Summary Table of Themes per Question
+
+```{r theme-table, echo=FALSE}
+knitr::kable(theme_table, caption = "Themes Identified per Open-Ended Question")
+```
+
+### Themes and Sub-Themes
+ 
+#### 1. Relevance to Real Life and Careers (Q10)
+- **Sub-theme**: Connection to environmental or applied courses
+- **Frequency**: ~32 mentions
+> "The course showed me how statistics applies to real-world problems, such as data analysis in my ENV course."
+ 
+#### 2. R as a Learning Tool (Q8, Q6)
+- **Sub-theme**: Confidence growth
+- **Sub-theme**: Initial difficulty
+- **Frequency**: ~44 mentions
+> "After the course, I had a higher opinion of my ability to use R because I learned how to create visualizations."
+ 
+#### 3. Clarity and Structure of Assignments (Q16)
+- **Sub-theme**: Assignment purpose unclear
+- **Sub-theme**: Difficulty with concepts
+- **Frequency**: ~26 mentions
+> "Sometimes it was hard to understand the purpose of the task."
+ 
+#### 4. Appreciation for Tutorials and TA Support (Q6, Q15)
+- **Sub-theme**: TA explanation support
+- **Sub-theme**: Reinforcement through worksheets
+- **Frequency**: ~38 mentions
+> "The weekly tutorial was extremely useful. My TA explained the concepts well and answered questions."
+ 
+#### 5. Feedback and Reflection (Q17)
+- **Sub-theme**: Value of feedback
+- **Sub-theme**: Need for more detailed responses
+- **Frequency**: ~21 mentions
+> "Most of the feedback I received was checks or X. I would have liked more specific feedback."
 
 ### Thematic Analysis
 
@@ -380,6 +435,8 @@ ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
        x = "Survey Question",
        y = "Sentiment Count")
 ```
+
+This qualitative analysis reveals that students valued tutorials, TA support, and real-world connections. Many experienced growth in using R, while also noting areas for improvement such as assignment clarity and feedback quality. These insights complement the quantitative findings and can help inform future course enhancements.
 
 
 # Conclusion
