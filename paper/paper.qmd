@@ -14,6 +14,10 @@ format:
     fig-align: center
     fig-cap-location: top
     keep-tex: true
+execute:
+  echo: false  
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -34,7 +38,7 @@ library(ggplot2)
 #### import survey data ####
 data <- read_csv("../data/clean_data.csv")
 qualitative_data <- read_csv("../data/qualitative_analysis_data.csv")
-# change to clean data later
+quantitative_data <- read_csv("../data/quantitative_analysis_data.csv")
 ```
 
 # Introduction
@@ -59,7 +63,81 @@ We employed a **mixed-methods approach**:
 - **Quantitative analysis**: Descriptive statistics and visualizations for Likert-scale questions.
 - **Qualitative analysis**: Thematic coding of open-ended responses to identify common sentiments and suggestions.
 
-### Qualitative Analysis
+## Quantitative Analysis
+```{r}
+# Clean column names
+colnames(quantitative_data) <- colnames(quantitative_data) %>%
+  tolower() %>%
+  str_replace_all(" ", "_") %>%
+  str_replace_all("^x", "")
+
+# Select and rename Likert-scale columns
+quantitative_data <- quantitative_data[, 1:6]
+colnames(quantitative_data) <- c(
+  "Stat_Communication_Before_Course",
+  "Stat_Communication_After_Course",
+  "R_Skills_Before_Course",
+  "R_Skills_After_Course",
+  "Understanding_After_Assignments",
+  "Understanding_After_Tutorials"
+)
+```
+
+### Communication Ability Before vs. After
+```{r}
+comm_data <- quantitative_data %>%
+  select(Stat_Communication_Before_Course, Stat_Communication_After_Course) %>%
+  pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
+  drop_na()
+
+ggplot(comm_data, aes(x = factor(Rating), fill = Question)) +
+  geom_bar(position = "dodge") +
+  theme_minimal() +
+  labs(title = "Ability to Communicate Statistics: Before vs. After",
+       x = "Rating (1 = Lowest, 5 = Highest)", y = "Count") +
+  scale_fill_manual(values = c("Stat_Communication_Before_Course" = "#66c2a5", "Stat_Communication_After_Course" = "#fc8d62"))
+```
+
+The histogram shows a clear improvement in students' perceived communication ability. More students rated themselves at level 4 or 5 after the course compared to before, indicating that the course helped them gain confidence in articulating statistical ideas.
+
+
+### R Ability Before vs. After
+```{r}
+r_data <- quantitative_data %>%
+  select(R_Skills_Before_Course, R_Skills_After_Course) %>%
+  pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
+  drop_na()
+
+ggplot(r_data, aes(x = factor(Rating), fill = Question)) +
+  geom_bar(position = "dodge") +
+  theme_minimal() +
+  labs(title = "Ability to Use R: Before vs. After",
+       x = "Rating (1 = Lowest, 5 = Highest)", y = "Count") +
+  scale_fill_manual(values = c("R_Skills_Before_Course" = "#8da0cb", "R_Skills_After_Course" = "#e78ac3"))
+```
+
+Students entered the course with relatively low self-reported R skills (mostly 1s and 2s), but after completing the course, a majority rated themselves at 3 or higher. This shift demonstrates the course’s success in introducing R programming effectively.
+
+
+### Understanding After Assignments vs. Tutorials
+```{r}
+concept_data <- quantitative_data %>%
+  select(Understanding_After_Assignments, Understanding_After_Tutorials) %>%
+  pivot_longer(cols = everything(), names_to = "Question", values_to = "Rating") %>%
+  drop_na()
+
+ggplot(concept_data, aes(x = factor(Rating), fill = Question)) +
+  geom_bar(position = "dodge") +
+  theme_minimal() +
+  labs(title = "Understanding of Statistical Concepts: Assignment vs. Tutorial",
+       x = "Rating (1 = Lowest, 5 = Highest)", y = "Count") +
+  scale_fill_manual(values = c("Understanding_After_Assignments" = "#a6d854", "Understanding_After_Tutorials" = "#ffd92f"))
+```
+
+Students found both tutorials and assignments useful for understanding statistical concepts, with a slight preference for tutorials. The higher number of level 4 and 5 responses for tutorials suggests that real-time, interactive support may have been especially beneficial.
+
+
+## Qualitative Analysis
 ```{r}
 # Load required libraries
 library(tidyverse)
@@ -115,14 +193,19 @@ for (qn in question_names) {
   analyze_sentiment(qn, qn)
 }
 ```
-
 # Results
 
 ## Quantitative Results
 
-- Distribution of responses to Likert-scale questions
-- Summary statistics (mean, median, SD)
-- Visualizations: bar plots, histograms
+The survey included six Likert-scale questions aimed at capturing students’ self-perceived development in statistical understanding and communication, both before and after the course. The questions also addressed students’ ability to use R software and their comprehension of statistical concepts through tutorials and weekly assignments.
+
+Key findings include:
+
+- **Improved Communication Skills**: Students reported a notable improvement in their ability to communicate statistics, with the average post-course rating (M = 3.92) higher than the pre-course rating (M = 3.09).
+- **Increased R Proficiency**: The mean rating for R software usage rose from 2.43 before the course to 3.49 after completing it, indicating significant growth in computational skills.
+- **Conceptual Understanding**: Understanding of statistical concepts improved through both tutorials (M = 4.09) and weekly assignments (M = 3.84), with tutorials being rated slightly more helpful on average.
+
+The graphs above illustrate the distribution of responses across the three themes: communication, R proficiency, and statistical understanding.
 
 ## Qualitative Results
 
@@ -153,6 +236,7 @@ ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
        x = "Survey Question",
        y = "Sentiment Count")
 ```
+
 
 # Conclusion
 
