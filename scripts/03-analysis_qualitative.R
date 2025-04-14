@@ -46,22 +46,13 @@ analyze_sentiment <- function(question_col, question_name) {
   ))
 }
 
-# List of questions to analyze
-question_columns <- c("Q3", "Q6", "Q8", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
+# Define the desired order of questions
+ordered_questions <- c("Q3", "Q6", "Q8", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
 
-# Apply sentiment analysis
-walk2(question_columns, question_columns, analyze_sentiment)
+# Convert the 'Question' column to a factor with specified levels
+sentiment_long$Question <- factor(sentiment_long$Question, levels = ordered_questions)
 
-# View results
-print(sentiment_results)
-
-# Reshape sentiment_results for plotting
-sentiment_long <- sentiment_results %>%
-  pivot_longer(cols = c("Positive", "Negative", "Neutral"),
-               names_to = "Sentiment",
-               values_to = "Count")
-
-# Plot
+# Plot with corrected order
 ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
   geom_bar(stat = "identity", position = "dodge") +
   scale_fill_manual(values = c("Positive" = "darkgreen", "Negative" = "red", "Neutral" = "gray")) +
@@ -69,3 +60,4 @@ ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
   labs(title = "Sentiment Distribution by Survey Question",
        x = "Survey Question",
        y = "Sentiment Count")
+
