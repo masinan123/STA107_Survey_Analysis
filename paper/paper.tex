@@ -66,46 +66,6 @@
 \fi
 \makeatother
 
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{241,243,245}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
-\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
-\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
@@ -263,87 +223,73 @@ We employed a \textbf{mixed-methods approach}:
   to identify common sentiments and suggestions.
 \end{itemize}
 
-\subsubsection{Qualitative Analysis}\label{qualitative-analysis}
+\subsection{Quantitative Analysis}\label{quantitative-analysis}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Load required libraries}
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\FunctionTok{library}\NormalTok{(stringr)}
-\FunctionTok{library}\NormalTok{(tidytext)}
-\FunctionTok{library}\NormalTok{(syuzhet)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{library}\NormalTok{(tidyr)}
-\FunctionTok{library}\NormalTok{(wordcloud)}
-\end{Highlighting}
-\end{Shaded}
+\subsubsection{Communication Ability Before
+vs.~After}\label{communication-ability-before-vs.-after}
 
-\begin{verbatim}
-Loading required package: RColorBrewer
-\end{verbatim}
+\includegraphics{paper_files/figure-pdf/unnamed-chunk-3-1.pdf}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Read in the survey data}
-\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ qualitative\_data}
+The histogram shows a clear improvement in students' perceived
+communication ability. More students rated themselves at level 4 or 5
+after the course compared to before, indicating that the course helped
+them gain confidence in articulating statistical ideas.
 
-\CommentTok{\# Rename columns}
-\FunctionTok{colnames}\NormalTok{(data)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{11}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Q3"}\NormalTok{, }\StringTok{"Q6"}\NormalTok{, }\StringTok{"Q8"}\NormalTok{, }\StringTok{"Q10"}\NormalTok{, }\StringTok{"Q11"}\NormalTok{, }
-                          \StringTok{"Q12"}\NormalTok{, }\StringTok{"Q13"}\NormalTok{, }\StringTok{"Q14"}\NormalTok{, }\StringTok{"Q15"}\NormalTok{, }\StringTok{"Q16"}\NormalTok{, }\StringTok{"Q17"}\NormalTok{)}
+\subsubsection{R Ability Before
+vs.~After}\label{r-ability-before-vs.-after}
 
-\CommentTok{\# Clean the text}
-\NormalTok{data\_clean }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), }\SpecialCharTok{\textasciitilde{}} \FunctionTok{str\_trim}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(.)))))}
+\includegraphics{paper_files/figure-pdf/unnamed-chunk-4-1.pdf}
 
-\CommentTok{\# Initialize an empty data frame to collect sentiment results}
-\NormalTok{sentiment\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{Question =} \FunctionTok{character}\NormalTok{(),}
-  \AttributeTok{Positive =} \FunctionTok{numeric}\NormalTok{(),}
-  \AttributeTok{Negative =} \FunctionTok{numeric}\NormalTok{(),}
-  \AttributeTok{Neutral =} \FunctionTok{numeric}\NormalTok{(),}
-  \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}
-\NormalTok{)}
+Students entered the course with relatively low self-reported R skills
+(mostly 1s and 2s), but after completing the course, a majority rated
+themselves at 3 or higher. This shift demonstrates the course's success
+in introducing R programming effectively.
 
-\CommentTok{\# Function to calculate sentiment}
-\NormalTok{analyze\_sentiment }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(question\_col, question\_name) \{}
-\NormalTok{  sentiments }\OtherTok{\textless{}{-}} \FunctionTok{get\_nrc\_sentiment}\NormalTok{(data\_clean[[question\_col]])}
-  
-\NormalTok{  pos }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(sentiments}\SpecialCharTok{$}\NormalTok{positive)}
-\NormalTok{  neg }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(sentiments}\SpecialCharTok{$}\NormalTok{negative)}
-\NormalTok{  neutral }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(sentiments) }\SpecialCharTok{{-}} 
-    \FunctionTok{sum}\NormalTok{(}\FunctionTok{rowSums}\NormalTok{(sentiments[, }\FunctionTok{c}\NormalTok{(}\StringTok{"positive"}\NormalTok{, }\StringTok{"negative"}\NormalTok{)]) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
-  
-\NormalTok{  sentiment\_results }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{rbind}\NormalTok{(sentiment\_results, }\FunctionTok{data.frame}\NormalTok{(}
-    \AttributeTok{Question =}\NormalTok{ question\_name,}
-    \AttributeTok{Positive =}\NormalTok{ pos,}
-    \AttributeTok{Negative =}\NormalTok{ neg,}
-    \AttributeTok{Neutral =}\NormalTok{ neutral}
-\NormalTok{  ))}
-\NormalTok{\}}
+\subsubsection{Understanding After Assignments
+vs.~Tutorials}\label{understanding-after-assignments-vs.-tutorials}
 
-\CommentTok{\# Apply the function to all relevant questions}
-\NormalTok{question\_names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Q3"}\NormalTok{, }\StringTok{"Q6"}\NormalTok{, }\StringTok{"Q8"}\NormalTok{, }\StringTok{"Q10"}\NormalTok{, }\StringTok{"Q11"}\NormalTok{, }
-                    \StringTok{"Q12"}\NormalTok{, }\StringTok{"Q13"}\NormalTok{, }\StringTok{"Q14"}\NormalTok{, }\StringTok{"Q15"}\NormalTok{, }\StringTok{"Q16"}\NormalTok{, }\StringTok{"Q17"}\NormalTok{)}
+\includegraphics{paper_files/figure-pdf/unnamed-chunk-5-1.pdf}
 
-\ControlFlowTok{for}\NormalTok{ (qn }\ControlFlowTok{in}\NormalTok{ question\_names) \{}
-  \FunctionTok{analyze\_sentiment}\NormalTok{(qn, qn)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
+Students found both tutorials and assignments useful for understanding
+statistical concepts, with a slight preference for tutorials. The higher
+number of level 4 and 5 responses for tutorials suggests that real-time,
+interactive support may have been especially beneficial.
+
+\subsection{Qualitative Analysis}\label{qualitative-analysis}
 
 \section{Results}\label{results}
 
 \subsection{Quantitative Results}\label{quantitative-results}
 
+The survey included six Likert-scale questions aimed at capturing
+students' self-perceived development in statistical understanding and
+communication, both before and after the course. The questions also
+addressed students' ability to use R software and their comprehension of
+statistical concepts through tutorials and weekly assignments.
+
+Key findings include:
+
 \begin{itemize}
 \tightlist
 \item
-  Distribution of responses to Likert-scale questions
+  \textbf{Improved Communication Skills}: Students reported a notable
+  improvement in their ability to communicate statistics, with the
+  average post-course rating (M = 3.92) higher than the pre-course
+  rating (M = 3.09).
 \item
-  Summary statistics (mean, median, SD)
+  \textbf{Increased R Proficiency}: The mean rating for R software usage
+  rose from 2.43 before the course to 3.49 after completing it,
+  indicating significant growth in computational skills.
 \item
-  Visualizations: bar plots, histograms
+  \textbf{Conceptual Understanding}: Understanding of statistical
+  concepts improved through both tutorials (M = 4.09) and weekly
+  assignments (M = 3.84), with tutorials being rated slightly more
+  helpful on average.
 \end{itemize}
+
+The graphs above illustrate the distribution of responses across the
+three themes: communication, R proficiency, and statistical
+understanding.
 
 \subsection{Qualitative Results}\label{qualitative-results}
 
