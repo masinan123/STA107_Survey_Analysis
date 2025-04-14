@@ -201,7 +201,7 @@ question types:
 \end{itemize}
 
 The post-course survey comprised 17 open- and close-ended questions.
-Among these, 11 were qualitative in nature (\texttt{Q3}, \texttt{Q6},
+Among these, 8 were qualitative in nature (\texttt{Q3}, \texttt{Q6},
 \texttt{Q8}, \texttt{Q10}, \texttt{Q11}, \texttt{Q12}, \texttt{Q13},
 \texttt{Q14}, \texttt{Q15}, \texttt{Q16}, \texttt{Q17}), focusing on
 free-text responses reflecting students' thoughts on the content,
@@ -293,27 +293,162 @@ understanding.
 
 \subsection{Qualitative Results}\label{qualitative-results}
 
-The sentiment analysis revealed a clear trend of positive student
-engagement across most open-ended responses. When asked about what
-aspects of the course were most helpful, students consistently expressed
-appreciation for the structured content delivery, use of R, and clarity
-in statistical explanations. Similarly, reflections on the usefulness of
-the normal model and applied examples elicited strong positive
-sentiment, highlighting the effectiveness of concept integration
-throughout the term.
+To gain deeper insights into student opinions, the qualitative analysis
+comprised two parts: thematic analysis and sentiment analysis.
 
-Feedback on the clarity of teaching and accessibility of course material
-was more mixed. While many students praised the instructor's effort and
-teaching style, others noted inconsistencies in understanding due to the
-pace of delivery or difficulty following complex R assignments.
+\subsubsection{Thematic Analysis}\label{thematic-analysis}
 
-The most critical responses were seen in prompts asking what aspects of
-the course were least helpful and what improvements could be made. Here,
-students frequently cited the fast pace of certain topics, confusion
-around R syntax, and a need for more real-world or scaffolded examples.
-Words like ``confusing,'' ``fast,'' and ``examples'' frequently appeared
-in these responses, pointing to the need for clearer instructional
-supports.
+Following Braun and Clarke's (2006) framework, a sample of approximately
+80 student responses was examined through six phases:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Familiarization}: Students' responses across 8 open-ended
+  questions were read and annotated to gain an overall understanding.
+\item
+  \textbf{Generating Initial Codes}: Semantic-level codes were created
+  to capture features related to course experience, R skill development,
+  and content relevance.
+\item
+  \textbf{Searching for Themes}: Related codes were clustered into
+  preliminary themes reflecting student attitudes and feedback.
+\item
+  \textbf{Reviewing Themes}: Themes were refined to ensure clarity and
+  distinctiveness across the dataset.
+\item
+  \textbf{Defining and Naming Themes}: Clear definitions were
+  established for each theme based on recurring patterns.
+\item
+  \textbf{Producing the Report}: Final themes were reported below with
+  supporting quotes.
+\end{enumerate}
+
+\subsubsection{Identified Themes}\label{identified-themes}
+
+\paragraph{Relevance to Real Life and
+Careers}\label{relevance-to-real-life-and-careers}
+
+Many students expressed appreciation for statistics content when it
+connected to real-world examples or their field of study.
+
+\begin{quote}
+``This course gave me a solid foundation in statistical concepts and
+taught me how to apply them using R. Overall, I gained practical skills
+and became more confident in working with data.''
+\end{quote}
+
+\begin{quote}
+``The course showed me how statistics applies to real-world problems,
+such as data analysis in my ENV course as it has alot of data.''
+\end{quote}
+
+\paragraph{R as a Learning Tool}\label{r-as-a-learning-tool}
+
+Students had mixed responses about learning R. While some found it
+helpful, others found it initially intimidating.
+
+\begin{quote}
+``After the course, I had a higher opinion of my ability to use R
+because I learned how to create visualizations and perform statistical
+analyses such as normal distribution applications and regression. Now I
+can use it to organize data, generate graphs, and interpret the output.
+The tutorial session and assignments were particularly helpful in
+helping me gradually build my skills.''
+\end{quote}
+
+\begin{quote}
+``I have never worked with R, but after trying to work with it I
+realized that it is also a powerful language.''
+\end{quote}
+
+\paragraph{Clarity and Structure of
+Assignments}\label{clarity-and-structure-of-assignments}
+
+Clearer instructions and expectations were a recurring theme.
+
+\begin{quote}
+``The weekly assignment was a R assignment based on the module. It was
+sometimes hard to understand the purpose of the task.''
+\end{quote}
+
+\begin{quote}
+``After completing the weekly assignments, I have a general
+understanding of the statistical concepts in each module, but sometimes
+I still have some difficulties understanding some difficult concepts.''
+\end{quote}
+
+\paragraph{Appreciation for Tutorials and TA
+Support}\label{appreciation-for-tutorials-and-ta-support}
+
+Tutorials and TA help sessions were viewed positively, especially for R
+and concept reinforcement.
+
+\begin{quote}
+``For each question on the tutorial worksheet, my TA explained the
+relevant concepts before attempting the problem, which helped me
+understand the concept better. In addition, all tutorial exercises were
+related to the weekly assignment, so it gave me reassurance that I was
+doing everything correctly before submitting my assignments.''
+\end{quote}
+
+\begin{quote}
+``The weekly tutorial was extremely useful for me. The worksheets were
+helpful and my TA, Dylan, did an excellent job at explaining the
+concepts involved and answering our questions when we were confused.''
+\end{quote}
+
+\begin{quote}
+``my ta was great at explaining concepts and let us ask many questions
+which would all get responses. very good by jaiditya.''
+\end{quote}
+
+\paragraph{Feedback and Reflection}\label{feedback-and-reflection}
+
+Students wanted more timely or individualized feedback.
+
+\begin{quote}
+``I always read the feedback give by the TA's since they allowed me to
+understand how to communicate my answers better. The statistical
+examples did help me recognize the usefulness and value of learning
+about statistics because it made me realize that statistics is
+everywhere.''
+\end{quote}
+
+\begin{quote}
+``Most of the feedback I recieved was in the form of checks or X. I feel
+like I could have gotten a little bit better feedback but most of the
+assignments I did were correct.''
+\end{quote}
+
+\subsubsection{Sentiment Analysis}\label{sentiment-analysis}
+
+The sentiment analysis provided a quantitative measure of student
+engagement across the survey's open-ended responses. Using the NRC
+sentiment lexicon (implemented via the syuzhet package), we quantified
+positive, negative, and neutral sentiments for each question.
+
+The analysis revealed:
+
+\begin{itemize}
+\item
+  \textbf{Predominantly Positive Sentiment}: Most responses expressed
+  positive sentiments, especially regarding structured content delivery,
+  effective use of R, and clear statistical explanations.
+\item
+  \textbf{Mixed Feedback on Clarity and Pace}: While many responses were
+  positive overall, some negative sentiments were associated with
+  challenges such as rapid topic progression and difficulties with R
+  syntax.
+\item
+  \textbf{Critical Comments}: Negative terms like ``confusing,''
+  ``fast,'' and ``examples'' frequently appeared in responses about
+  areas needing clearer instructional support.
+\end{itemize}
+
+The bar chart above (generated in the sentiment analysis code chunk)
+illustrates the distribution of sentiment (positive, negative, neutral)
+for each of the 8 survey questions.
 
 \begin{figure}[H]
 
@@ -334,7 +469,7 @@ enhancement. Continued evaluation and iteration will ensure the course
 remains responsive to student needs and pedagogical best practices.
 
 From a qualitative perspective, student feedback revealed strong
-appreciation for several key elements of the course---especially the
+appreciation for several key elements of the course especially the
 hands-on R activities, the integration of real-world statistical
 examples, and the clarity of normal model explanations. These components
 were described as engaging and instructive, affirming their value in

@@ -52,7 +52,7 @@ This section outlines the structure of the survey and highlights key question ty
 - **Quantitative items**: Likert-scale responses on course clarity, usefulness of R exercises, and understanding of statistical concepts.
 - **Qualitative items**: Open-ended prompts for students to share what they found most/least helpful and suggestions for improvement.
 
-The post-course survey comprised 17 open- and close-ended questions. Among these, 11 were qualitative in nature (`Q3`, `Q6`, `Q8`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`), focusing on free-text responses reflecting students' thoughts on the content, instruction, and overall experience.
+The post-course survey comprised 17 open- and close-ended questions. Among these, 8 were qualitative in nature (`Q3`, `Q6`, `Q8`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`), focusing on free-text responses reflecting students' thoughts on the content, instruction, and overall experience.
 
 # Data Analysis
 
@@ -152,8 +152,7 @@ library(wordcloud)
 data <- qualitative_data
 
 # Rename columns
-colnames(data)[1:11] <- c("Q3", "Q6", "Q8", "Q10", "Q11", 
-                          "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
+colnames(data)[1:8] <- c("Q3", "Q6", "Q8", "Q10", "Q13", "Q15", "Q16", "Q17")
 
 # Clean the text
 data_clean <- data %>%
@@ -186,8 +185,7 @@ analyze_sentiment <- function(question_col, question_name) {
 }
 
 # Apply the function to all relevant questions
-question_names <- c("Q3", "Q6", "Q8", "Q10", "Q11", 
-                    "Q12", "Q13", "Q14", "Q15", "Q16", "Q17")
+question_names <- c("Q3", "Q6", "Q8", "Q10", "Q13", "Q15", "Q16", "Q17")
 
 for (qn in question_names) {
   analyze_sentiment(qn, qn)
@@ -209,11 +207,78 @@ The graphs above illustrate the distribution of responses across the three theme
 
 ## Qualitative Results
 
-The sentiment analysis revealed a clear trend of positive student engagement across most open-ended responses. When asked about what aspects of the course were most helpful, students consistently expressed appreciation for the structured content delivery, use of R, and clarity in statistical explanations. Similarly, reflections on the usefulness of the normal model and applied examples elicited strong positive sentiment, highlighting the effectiveness of concept integration throughout the term.
+To gain deeper insights into student opinions, the qualitative analysis comprised two parts: thematic analysis and sentiment analysis.
 
-Feedback on the clarity of teaching and accessibility of course material was more mixed. While many students praised the instructor’s effort and teaching style, others noted inconsistencies in understanding due to the pace of delivery or difficulty following complex R assignments.
+### Thematic Analysis
 
-The most critical responses were seen in prompts asking what aspects of the course were least helpful and what improvements could be made. Here, students frequently cited the fast pace of certain topics, confusion around R syntax, and a need for more real-world or scaffolded examples. Words like “confusing,” “fast,” and “examples” frequently appeared in these responses, pointing to the need for clearer instructional supports.
+Following Braun and Clarke’s (2006) framework, a sample of approximately 80 student responses was examined through six phases:
+
+1. **Familiarization**: Students’ responses across 8 open-ended questions were read and annotated to gain an overall understanding.
+
+2. **Generating Initial Codes**: Semantic-level codes were created to capture features related to course experience, R skill development, and content relevance.
+
+3. **Searching for Themes**: Related codes were clustered into preliminary themes reflecting student attitudes and feedback.
+
+4. **Reviewing Themes**: Themes were refined to ensure clarity and distinctiveness across the dataset.
+
+5. **Defining and Naming Themes**: Clear definitions were established for each theme based on recurring patterns.
+
+6. **Producing the Report**: Final themes were reported below with supporting quotes.
+
+### Identified Themes
+
+#### Relevance to Real Life and Careers
+Many students expressed appreciation for statistics content when it connected to real-world examples or their field of study.
+
+> "This course gave me a solid foundation in statistical concepts and taught me how to apply them using R. Overall, I gained practical skills and became more confident in working with data."
+
+> "The course showed me how statistics applies to real-world problems, such as data analysis in my ENV course as it has alot of data."
+
+#### R as a Learning Tool
+Students had mixed responses about learning R. While some found it helpful, others found it initially intimidating.
+
+> "After the course, I had a higher opinion of my ability to use R because I learned how to create visualizations and perform statistical analyses such as normal distribution applications and regression. Now I can use it to organize data, generate graphs, and interpret the output. The tutorial session and assignments were particularly helpful in helping me gradually build my skills."
+
+> "I have never worked with R, but after trying to work with it I realized that it is also a powerful language."
+
+#### Clarity and Structure of Assignments
+Clearer instructions and expectations were a recurring theme.
+
+> "The weekly assignment was a R assignment based on the module. It was sometimes hard to understand the purpose of the task."
+
+> "After completing the weekly assignments, I have a general understanding of the statistical concepts in each module, but sometimes I still have some difficulties understanding some difficult concepts."
+
+#### Appreciation for Tutorials and TA Support
+Tutorials and TA help sessions were viewed positively, especially for R and concept reinforcement.
+
+> "For each question on the tutorial worksheet, my TA explained the relevant concepts before attempting the problem, which helped me understand the concept better. In addition, all tutorial exercises were related to the weekly assignment, so it gave me reassurance that I was doing everything correctly before submitting my assignments."
+
+> "The weekly tutorial was extremely useful for me. The worksheets were helpful and my TA, Dylan, did an excellent job at explaining the concepts involved and answering our questions when we were confused."
+
+> "my ta was great at explaining concepts and let us ask many questions which would all get responses. very good by jaiditya."
+
+#### Feedback and Reflection
+Students wanted more timely or individualized feedback.
+
+> "I always read the feedback give by the TA's since they allowed me to understand how to communicate my answers better. The statistical examples did help me recognize the usefulness and value of learning about statistics because it made me realize that statistics is everywhere."
+
+> "Most of the feedback I recieved was in the form of checks or X. I feel like I could have gotten a little bit better feedback but most of the assignments I did were correct."
+
+
+### Sentiment Analysis
+
+The sentiment analysis provided a quantitative measure of student engagement across the survey’s open-ended responses. Using the NRC sentiment lexicon (implemented via the syuzhet package), we quantified positive, negative, and neutral sentiments for each question.
+
+The analysis revealed:
+
+- **Predominantly Positive Sentiment**: Most responses expressed positive sentiments, especially regarding structured content delivery, effective use of R, and clear statistical explanations.
+
+- **Mixed Feedback on Clarity and Pace**: While many responses were positive overall, some negative sentiments were associated with challenges such as rapid topic progression and difficulties with R syntax.
+
+- **Critical Comments**: Negative terms like “confusing,” “fast,” and “examples” frequently appeared in responses about areas needing clearer instructional support.
+
+The bar chart above (generated in the sentiment analysis code chunk) illustrates the distribution of sentiment (positive, negative, neutral) for each of the 8 survey questions.
+
 
 ```{r sentiment-plot, echo=FALSE, fig.cap="Sentiment Distribution by Survey Question"}
 # Reshape the data to long format for plotting
@@ -242,7 +307,7 @@ ggplot(sentiment_long, aes(x = Question, y = Count, fill = Sentiment)) +
 
 The STA107 post-course survey provides valuable insights into how students perceive the course structure and its technical components. Findings highlight both effective practices and opportunities for enhancement. Continued evaluation and iteration will ensure the course remains responsive to student needs and pedagogical best practices.
 
-From a qualitative perspective, student feedback revealed strong appreciation for several key elements of the course—especially the hands-on R activities, the integration of real-world statistical examples, and the clarity of normal model explanations. These components were described as engaging and instructive, affirming their value in helping students apply theoretical knowledge in practical settings.
+From a qualitative perspective, student feedback revealed strong appreciation for several key elements of the course especially the hands-on R activities, the integration of real-world statistical examples, and the clarity of normal model explanations. These components were described as engaging and instructive, affirming their value in helping students apply theoretical knowledge in practical settings.
 
 However, when students were asked about areas of improvement, many raised concerns regarding the speed at which complex topics were introduced, as well as the difficulty of interpreting R-based assignments without more structured guidance. Themes of pacing, clarity, and the need for more scaffolded instruction were particularly prominent. Addressing these concerns by slowing down the delivery of technical material, providing more detailed examples, and incorporating mid-semester feedback opportunities could significantly enhance the learning experience in future offerings of STA107.
 
