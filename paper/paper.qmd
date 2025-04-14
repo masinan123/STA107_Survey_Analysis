@@ -312,7 +312,7 @@ To gain deeper insights into student opinions, the qualitative analysis comprise
 ### Summary Table of Themes per Question
 
 ```{r theme-table, echo=FALSE}
-knitr::kable(theme_table, caption = "Themes Identified per Open-Ended Question")
+knitr::kable(question_theme_mapping, caption = "Themes Identified per Open-Ended Question")
 ```
 
 ### Themes and Sub-Themes
