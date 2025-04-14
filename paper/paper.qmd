@@ -286,6 +286,9 @@ question_theme_mapping <- tibble(
   )
 )
 ```
+
+The qualitative analysis involved a combination of thematic and sentiment analysis to gain deeper insights into student experiences. First, student responses to open-ended survey questions were cleaned and prepared for analysis. Sentiment analysis was then applied using the NRC sentiment lexicon to quantify positive, negative, and neutral sentiments across each question. Additionally, thematic analysis was conducted to identify recurring patterns in student feedback, which were categorized into key themes such as course relevance, R proficiency, and tutorial effectiveness. This mixed-method approach provided a comprehensive understanding of how students felt about different aspects of the course.
+
 # Results
 
 ## Quantitative Results
