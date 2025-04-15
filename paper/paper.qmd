@@ -124,6 +124,7 @@ knitr::kable(comm_t_table, caption = "Paired t-test: Statistical Communication
 
 The paired t-test in @tbl-comm-ttest shows a **statistically significant** improvement in students’ ability to communicate statistical ideas (*p* < 0.001).
 
+\newpage
 
 ### R Ability Before vs. After
 ```{r}
@@ -329,10 +330,10 @@ knitr::kable(question_theme_mapping, caption = "Themes Identified per Open-Ended
 > "After the course, I had a higher opinion of my ability to use R because I learned how to create visualizations."
  
 #### 3. Clarity and Structure of Assignments (Q16)
-- **Sub-theme**: Assignment purpose unclear
-- **Sub-theme**: Difficulty with concepts
-- **Frequency**: ~26 mentions
-> "Sometimes it was hard to understand the purpose of the task."
+- **Sub-theme**: Perceived challenge in task content
+- **Sub-theme**: Interpretation of assignment expectations
+- **Reflection**: Several students noted that assignments were challenging. This likely reflects the complex and mathematical nature of the content, an intentional design element aimed at promoting deeper learning. 
+> "The assignments are not easy and you need to think critically to figure them out."
  
 #### 4. Appreciation for Tutorials and TA Support (Q6, Q15)
 - **Sub-theme**: TA explanation support
